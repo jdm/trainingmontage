@@ -1,0 +1,118 @@
+<html>
+<head>
+  <title>Firefox development training mission</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="jquery.min.js"></script>
+  <script src="magic.js"></script>
+</head>
+<body>
+  <div id="floater">
+  </div>
+
+  <div id="begin" class="step initial">
+    <h1>Before we begin:</h1>
+    <p>
+      <span class="button" next="change-intro">I have compiled Firefox already</span>
+      <span class="button" next="setup">I have not compiled Firefox</span>
+    </p>
+  </div>
+
+  <div id="setup" class="step">
+    <h1>Let's get started</h1>
+    <p>What operating system do you use?</p>
+    <p><span class="button" next="win">Windows</span></p>
+    <p><span class="button" next="linux/osx">OS X (Apple)</span></p>
+    <p><span class="button" next="linux/osx">Linux</span></p>
+    </p>
+  </div>
+
+  <div id="win" class="step">
+    <h1>Great! Time to set up your development environment!</h1>
+    <em>Sorry, this part of the training mission is incomplete. Plesae follow the steps at <a href="https://developer.mozilla.org/en-US/docs/Simple_Firefox_build">the wiki</a> and continue once your development environment is set up.</em>
+    <p>All the remaining steps in this tutorial will require you to be running this mozilla-build environment.</p>
+    <p><span class="button" next="source">I'm finished!</span></p>
+  </div>
+
+  <div id="linux/osx" class="step">
+    <h1>Great! Time to set up your development environment!</h1>
+    <p>If you run this script in your terminal, the packages required to build Firefox  will be installed.</p>
+    <p><code>wget --no-check-certificate https://hg.mozilla.org/mozilla-central/raw-file/default/python/mozboot/bin/bootstrap.py && python bootstrap.py</code></p>
+    <p>If you prefer to set it up yourself, then follow the steps at <a href="https://developer.mozilla.org/en-US/docs/Simple_Firefox_build/Linux_and_MacOS_build_preparation">our wiki</a>.</p>
+    <p><span class="button" next="source">I'm finished!</span></p>
+  </div>
+
+  <div id="source" class="step">
+    <h1>Let's download the source code for Firefox.</h1>
+    <p>Run <code>hg clone https://hg.mozilla.org/mozilla-central</code> to get it. This is going to take a while.</p>
+    <p><span class="button" next="build">It's done!</span></p>
+  </div>
+
+  <div id="build" class="step">
+    <h1>Time to build Firefox.</h1>
+    <p>Go to the new <code>mozilla-central</code> directory, and run <code>./mach build</code>. This is going to take a <em>very</em> long time.</p>
+    <p><span class="button" next="run">It's done!</span></p>
+  </div>
+
+  <div id="run" class="step">
+    <h1>Let's make sure it works!</h1>
+    <p>Run <code>./mach run -P blank</code>. If the profile manager dialog appears, create a new profile named <code>blank</code> and continue starting Firefox.</p>
+    <p><span id="run-hint" class="hint">Please visit <a href="http://irc.mozilla.org">#introduction</a> on irc.mozilla.org and explain the problem you're having.</span></p>
+    <p>
+      <span class="button" next="change-intro">My new version of Firefox works!</span>
+      <span class="button" unhide="run-hint">Firefox didn't start.</span>
+    </p>
+  </div>
+
+  <div id="change-intro" class="step">
+    <h1>Time to have some fun.</h1>
+    <p>Choose a training mission:</p>
+    <!--<p><span class="button">Change how Firefox behaves using JavaScript</span></p>
+    <p><span class="button">Change how Firefox behaves using C++</span></p>-->
+    <p><span class="button" next="green-start">Turn your tabs green with CSS!</span></p>
+  </div>
+
+  <div id="green-start" class="step">
+    <h1>Turning your tabs green</h1>
+    <p>The important thing to know about this mission is that Firefox's stylesheets are stored in <code>browser/themes/</code> and <code>toolkit/themes/</code>. The first path is for Firefox-specific theming, while the second is for theming shared by all Gecko-based applications (such as Thunderbird).</p>
+    <p>See if you can find the right stylesheet to change under <code>browser/themes/</code>. There are different themes for each major platform (Windows, OS X, and Linux), so make sure you look in the correct subdirectory (ie. <code>browser/themes/linux/</code> if you're using Linux).</p>
+    <p><span id="green-start-hint" class="hint">It might be tempting to look at <code>searchbar.css</code>, but that only styles the small input bar where you can quickly access major search enginges. You should look at <code>browser.css</code>, which contains the styling rules for the majority of the Firefox user interface.</span></p>
+    <p>
+      <span class="button" next="green-xul">I found the file!</span>
+      <span class="button" unhide="green-start-hint">I need a hint.</span>
+    </p>
+  </div>
+
+  <div id="green-xul" class="step">
+    <h1>Turning your tabs green</h1>
+    <p>It turns out that <code>browser.css</code> has a lot of rules in it. Let's narrow down the actual rule we want to change.</p>
+    <p>It's time to use MXR, the <a href="http://mxr.mozilla.org/mozilla-central/">Mozilla Cross Reference</a> tool. You can search for &quot;browser.css&quot; and take a look through the results; see if any of the files that show up look like good candidates!</p>
+    <p><span id="green-xul-hint" class="hint">You can focus on XUL and XML files, which are used to define Firefox's user interface. Often, CSS files share filenames with the files that they are styling - in this case, <code>browser.xul</code> looks like a good match.</span></p>
+    <p>
+      <span class="button" next="green-xul-2">I found one!</span>
+      <span class="button" unhide="green-xul-hint">I'd like a hint.</span>
+    </p>
+  </div>
+
+  <div id="green-xul-2" class="step">
+    <h1>Turning your tabs green</h1>
+    <p><code>browser.xul</code> is a pretty big file, so it's usually best to search for keywords to find relevant parts. In this case, try searching for &quot;tab&quot; and see if you come across anything useful (such as a class or id attribute). If you do, see whether you can find the selector in <code>browser.css</code>.</p>
+    <p><span id="green-xul-2-hint" class="hint">In your search, you should come across a <code>&lt;tabs&gt;</code> element that represents the tabs in Firefox's interface. Everything you need can be found there, since it has a <code>&lt;tab&gt;</code> child with a class attribute that is present in <code>browser.css</code>.</span></p>
+    <p>
+      <span class="button" next="green-css">I found one!</span>
+      <span class="button" unhide="green-xul-2-hint">I need a hint.</span>
+    </p>
+  </div>
+
+  <div id="green-css" class="step">
+    <h1>Turning your tabs green</h1>
+    <p>Now that you have a selector to change in <code>browser.css</code>, all that remains is to make your changes and rebuild Firefox. You can perform a full build (<code>./mach build</code>), but in this case it is much faster to just rebuild <code>browser/</code>, like so:</p>
+    <p><code>./mach build browser/</code></p>
+    <p>When this is finished, run the local Firefox build and see whether your changes worked!</p>
+    <p><span id="green-css-hint" class="hint">Please visit <a href="http://irc.mozilla.org">#introduction</a> on irc.mozilla.org and explain the problem you're having.</span></p>
+    <p>
+      <span class="button" next="change-intro">My tabs are green!</span>
+      <span class="button" unhide="green-css-hint">It didn't work.</span>
+    </p>
+  </div>
+</body>
+</html>

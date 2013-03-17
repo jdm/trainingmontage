@@ -1,0 +1,59 @@
+.button {
+    border-radius: 10px;
+    border: 1px black solid;
+    padding: 10px;
+    cursor: pointer;
+    box-shadow: 2px 2px 2px #888888;
+    display: inline-block;
+}
+
+.button:active {
+    box-shadow: 0px 0px 0px #888888;
+    top: 2px;
+    left: 2px;
+    position: relative;
+    -moz-user-select: none;
+}
+
+code {
+    background-color: lightgrey;
+    padding: 5px;
+    border-radius: 5px;
+    line-height: 2em;
+}
+
+.step {
+    /*border: 1px solid black;*/
+    /*position: relative;*/
+    display: none;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 80%;
+    background-color: rgba(255, 255, 255, .8);
+}
+
+.hint {
+    /*border: 1px dashed red;*/
+    display: none;
+}
+
+.initial {
+    display: block;
+}
+
+body {
+    font-size: x-large;
+}
+
+#floater {
+  float:left;
+  height:50%;
+  margin-bottom:-120px;
+}
+
+.step {
+  clear:both;
+  height:240px;
+  position:relative;
+}
